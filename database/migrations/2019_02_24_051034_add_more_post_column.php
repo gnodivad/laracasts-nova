@@ -18,6 +18,7 @@ class AddMorePostColumn extends Migration
             $table->dateTime('publish_until')->nullable();
             $table->boolean('is_published')->default(false);
             $table->string('category')->nullable();
+            $table->integer('user_id')->after('id');
         });
     }
 
@@ -33,6 +34,7 @@ class AddMorePostColumn extends Migration
             $table->dropColumn('publish_until');
             $table->dropColumn('is_published');
             $table->dropColumn('category');
+            $table->dropColumn('user_id');
         });
     }
 }
