@@ -2,12 +2,12 @@
 
 namespace App\Nova;
 
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
-use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
@@ -35,16 +35,22 @@ class Post extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'title', 'body'
+        'id', 'title', 'body',
     ];
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        return $query->where('user_id', $request->user()->id);
+    }
 
     /**
      * Get the fields displayed by the resource.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return array
      */
-    public function fields(Request $request) : array
+    public function fields(Request $request): array
     {
         return [
             ID::make()->sortable(),
@@ -61,19 +67,22 @@ class Post extends Resource
                 ->hideFromIndex()
                 ->rules('after_or_equal:publish_at'),
 
-            Boolean::make('Is Published'),
+            Boolean::make('Is Published')
+                ->canSee(function ($request) {
+                    return false;
+                }),
 
             Select::make('Category')
                 ->options([
                    'tutorials' => 'Tutorials',
-                   'news' => 'News'
+                   'news' => 'News',
                 ])
                 ->hideWhenUpdating()
                 ->rules('required'),
 
             BelongsTo::make('User'),
 
-            BelongsToMany::make('Tags')
+            BelongsToMany::make('Tags'),
         ];
     }
 
@@ -81,6 +90,7 @@ class Post extends Resource
      * Get the cards available for the request.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return array
      */
     public function cards(Request $request)
@@ -92,6 +102,7 @@ class Post extends Resource
      * Get the filters available for the resource.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return array
      */
     public function filters(Request $request)
@@ -103,6 +114,7 @@ class Post extends Resource
      * Get the lenses available for the resource.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return array
      */
     public function lenses(Request $request)
@@ -114,6 +126,7 @@ class Post extends Resource
      * Get the actions available for the resource.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return array
      */
     public function actions(Request $request)
