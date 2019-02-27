@@ -35,8 +35,20 @@ class Post extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'title', 'body',
+        'id',
+        'title',
+        'body',
     ];
+
+    public function title()
+    {
+        return $this->title . ' - ' .$this->category;
+    }
+
+    public function subtitle()
+    {
+        return "Author: " . $this->user->name;
+    }
 
     public static function indexQuery(NovaRequest $request, $query)
     {
