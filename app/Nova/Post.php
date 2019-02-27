@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\PublishPost;
 use App\Nova\Filters\PostCategories;
 use App\Nova\Filters\PostPublished;
 use App\Nova\Lenses\MostTags;
@@ -45,12 +46,12 @@ class Post extends Resource
 
     public function title()
     {
-        return $this->title . ' - ' .$this->category;
+        return $this->title . ' - ' . $this->category;
     }
 
     public function subtitle()
     {
-        return "Author: " . $this->user->name;
+        return 'Author: ' . $this->user->name;
     }
 
     public static function indexQuery(NovaRequest $request, $query)
@@ -120,8 +121,8 @@ class Post extends Resource
     public function filters(Request $request)
     {
         return [
-            new PostPublished,
-            new PostCategories
+            new PostPublished(),
+            new PostCategories(),
         ];
     }
 
@@ -135,7 +136,7 @@ class Post extends Resource
     public function lenses(Request $request)
     {
         return [
-            new MostTags
+            new MostTags(),
         ];
     }
 
@@ -148,6 +149,12 @@ class Post extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new PublishPost())->canSee(function ($request) {
+                return true;
+            })->canRun(function ($request, $post) {
+                return $post->id === 3;
+            }),
+        ];
     }
 }
