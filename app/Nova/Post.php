@@ -2,6 +2,9 @@
 
 namespace App\Nova;
 
+use App\Nova\Filters\PostCategories;
+use App\Nova\Filters\PostPublished;
+use App\Nova\Lenses\MostTags;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
@@ -79,10 +82,7 @@ class Post extends Resource
                 ->hideFromIndex()
                 ->rules('after_or_equal:publish_at'),
 
-            Boolean::make('Is Published')
-                ->canSee(function ($request) {
-                    return false;
-                }),
+            Boolean::make('Is Published'),
 
             Select::make('Category')
                 ->options([
@@ -119,7 +119,10 @@ class Post extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new PostPublished,
+            new PostCategories
+        ];
     }
 
     /**
@@ -131,7 +134,9 @@ class Post extends Resource
      */
     public function lenses(Request $request)
     {
-        return [];
+        return [
+            new MostTags
+        ];
     }
 
     /**
