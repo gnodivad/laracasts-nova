@@ -9,6 +9,7 @@ use App\Nova\Lenses\MostTags;
 use App\Nova\Metrics\PostCount;
 use App\Nova\Metrics\PostsPerCategory;
 use App\Nova\Metrics\PostsPerDay;
+use Gnodivad\NovaClock\NovaClock;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
@@ -112,6 +113,7 @@ class Post extends Resource
     public function cards(Request $request)
     {
         return [
+            (new NovaClock)->blink(),
             (new PostsPerDay)->width('full'),
             (new PostCount)->width('1/2'),
             (new PostsPerCategory)->width('1/2'),

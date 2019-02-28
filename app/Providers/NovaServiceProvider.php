@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Gnodivad\NovaClock\NovaClock;
 use Gnodivad\Viewcache\Viewcache;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
@@ -57,7 +58,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         return [
-            new Help,
+            (new NovaClock)->blink()->displaySeconds()
         ];
     }
 
