@@ -14,7 +14,8 @@
         "laravel/tinker": "^1.0",
         "laravel/nova": "*",
         "gnodivad/viewcache": "*",
-        "gnodivad/nova-clock": "*"
+        "gnodivad/nova-clock": "*",
+        "gnodivad/string-limit": "*"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
@@ -68,6 +69,10 @@
         {
             "type": "path",
             "url": "./nova-components/NovaClock"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/StringLimit"
         }
     ],
     "minimum-stability": "dev",

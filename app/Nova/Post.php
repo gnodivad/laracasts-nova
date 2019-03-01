@@ -10,6 +10,7 @@ use App\Nova\Metrics\PostCount;
 use App\Nova\Metrics\PostsPerCategory;
 use App\Nova\Metrics\PostsPerDay;
 use Gnodivad\NovaClock\NovaClock;
+use Gnodivad\StringLimit\StringLimit;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
@@ -75,7 +76,7 @@ class Post extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make('Title')->rules('required'),
+            StringLimit::make('Title')->rules('required')->max(150),
 
             Trix::make('Body')->rules('required'),
 

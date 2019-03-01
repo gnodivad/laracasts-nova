@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5f51106164f97c1e18cff970966346a7",
+    "content-hash": "3d5f42169dbde846696a293dd7dc0d26",
     "packages": [
         {
             "name": "cakephp/chronos",
@@ -452,6 +452,40 @@
                 "MIT"
             ],
             "description": "A Laravel Nova card.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ]
+        },
+        {
+            "name": "gnodivad/string-limit",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/StringLimit",
+                "reference": "d04ce00497c8dab1e440aa0ec53b97b1268cd4af",
+                "shasum": null
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Gnodivad\\StringLimit\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Gnodivad\\StringLimit\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova field.",
             "keywords": [
                 "laravel",
                 "nova"
